@@ -1,0 +1,1024 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* ================================================================
+   CONTROLPLANE GLOBAL FOUNDATION
+   ================================================================ */
+
+:root {
+  color-scheme: light;
+
+  --cp-bg: #D36A32;
+  --cp-bg-dark: #B94F22;
+  --cp-bg-light: #E17C47;
+  --cp-bg-glow: #E8945A;
+  --cp-workspace: #FFFFFF;
+  --cp-surface: #FFF7F1;
+  --cp-intervention: #F2D7CC;
+  --cp-block: #7A2F2B;
+
+  --cp-text: #171513;
+  --cp-text-secondary: #625C57;
+  --cp-text-muted: #948A83;
+
+  --cp-border: #E8DDD6;
+  --cp-border-strong: #D8C7BD;
+
+  --cp-radius: 0.625rem;
+}
+
+
+/* ================================================================
+   RESET
+   ================================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: var(--cp-bg);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+
+  font-family:
+    'Inter',
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+
+  background:
+    radial-gradient(ellipse 120% 100% at 50% 0%, #E8945A 0%, #D36A32 35%, #B94F22 80%, #9A3E1A 100%),
+    var(--cp-bg);
+  color: var(--cp-text);
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  text-rendering: optimizeLegibility;
+}
+
+/* Subtle warm glow at top center — like ambient light hitting the environment */
+body::before {
+  content: '';
+  position: fixed;
+  top: -20%;
+  left: 10%;
+  right: 10%;
+  height: 60%;
+  background: radial-gradient(ellipse at 50% 0%, rgba(232, 148, 90, 0.4) 0%, rgba(211, 106, 50, 0.15) 40%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+/* ================================================================
+   SELECTION
+   ================================================================ */
+
+::selection {
+  background: #F2D7CC;
+  color: #171513;
+}
+
+
+/* ================================================================
+   SCROLLBAR
+   ================================================================ */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(23, 21, 19, 0.18) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(23, 21, 19, 0.16);
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(23, 21, 19, 0.25);
+}
+
+
+/* ================================================================
+   TYPOGRAPHY
+   ================================================================ */
+
+@layer base {
+
+  h1 {
+    @apply text-display-lg tracking-tight text-cp-text;
+  }
+
+  h2 {
+    @apply text-display-sm tracking-tight text-cp-text;
+  }
+
+  h3 {
+    @apply text-heading-lg text-cp-text;
+  }
+
+  h4 {
+    @apply text-heading text-cp-text;
+  }
+
+  p {
+    @apply text-cp-text-secondary;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+}
+
+
+/* ================================================================
+   CORE CONTROLPLANE COMPONENTS
+   ================================================================ */
+
+@layer components {
+
+  /* --------------------------------------------------------------
+     CARDS
+     -------------------------------------------------------------- */
+
+  .cp-card {
+    @apply
+      bg-cp-surface
+      border
+      border-cp-border
+      rounded-lg
+      shadow-card;
+  }
+
+
+  .cp-card-hover {
+    @apply
+      cp-card
+      hover:border-cp-border-strong
+      hover:shadow-card-hover
+      transition-all
+      duration-200
+      cursor-pointer;
+  }
+
+
+  /* --------------------------------------------------------------
+     SECONDARY SURFACE
+     -------------------------------------------------------------- */
+
+  .cp-surface {
+    @apply
+      bg-cp-surface-2
+      border
+      border-cp-border
+      rounded-md;
+  }
+
+
+  /* --------------------------------------------------------------
+     INPUTS
+     -------------------------------------------------------------- */
+
+  .cp-input {
+    @apply
+      bg-cp-surface
+      border
+      border-cp-border
+      rounded-md
+      px-3
+      py-2
+      text-body
+      text-cp-text
+      placeholder-cp-text-muted
+      focus:outline-none
+      focus:border-cp-accent
+      focus:ring-1
+      focus:ring-cp-accent/15
+      transition-all;
+  }
+
+
+  .cp-input:hover {
+    border-color: #D8C7BD;
+  }
+
+
+  .cp-input:focus {
+    background: #FFFFFF;
+  }
+
+
+  .cp-textarea {
+    @apply cp-input resize-none;
+  }
+
+
+  /* --------------------------------------------------------------
+     BUTTONS
+     -------------------------------------------------------------- */
+
+  .cp-btn {
+    @apply
+      px-4
+      py-2
+      rounded-md
+      font-medium
+      text-body-sm
+      transition-all
+      duration-150
+      inline-flex
+      items-center
+      justify-center
+      gap-2;
+  }
+
+
+  /* Primary = BLACK
+     Orange remains the environment, not every CTA. */
+
+  .cp-btn-primary {
+    @apply
+      cp-btn
+      bg-cp-brand
+      hover:bg-cp-brand-dark
+      text-white
+      shadow-sm;
+  }
+
+
+  /* Secondary = orange */
+
+  .cp-btn-secondary {
+    @apply
+      cp-btn
+      bg-cp-accent
+      hover:bg-cp-accent-hover
+      text-white
+      shadow-sm;
+  }
+
+
+  /* Quiet button */
+
+  .cp-btn-ghost {
+    @apply
+      cp-btn
+      bg-transparent
+      hover:bg-cp-surface-2
+      text-cp-text-secondary
+      hover:text-cp-text
+      border
+      border-cp-border;
+  }
+
+
+  /* Brand-outline button */
+
+  .cp-btn-ghost-brand {
+    @apply
+      cp-btn
+      bg-transparent
+      hover:bg-cp-brand-light
+      text-cp-brand
+      hover:text-cp-brand-dark
+      border
+      border-cp-border;
+  }
+
+
+  .cp-btn-sm {
+    @apply
+      cp-btn
+      text-caption
+      px-3
+      py-1.5;
+  }
+
+
+  .cp-btn-lg {
+    @apply
+      cp-btn
+      text-body
+      px-6
+      py-3;
+  }
+
+
+  /* --------------------------------------------------------------
+     LABELS
+     -------------------------------------------------------------- */
+
+  .cp-section-title {
+    @apply
+      text-caption
+      font-medium
+      text-cp-text-secondary
+      uppercase
+      tracking-wider;
+  }
+
+
+  .cp-eyebrow {
+    @apply
+      text-eyebrow
+      font-mono
+      text-cp-brand
+      uppercase
+      tracking-widest;
+  }
+
+
+  .cp-eyebrow-accent {
+    @apply
+      text-eyebrow
+      font-mono
+      text-cp-accent
+      uppercase
+      tracking-widest;
+  }
+
+
+  .cp-label {
+    @apply
+      text-caption
+      font-medium
+      text-cp-text-secondary;
+  }
+
+
+  .cp-mono {
+    @apply
+      font-mono
+      text-metadata;
+  }
+
+
+  /* --------------------------------------------------------------
+     DIVIDERS
+     -------------------------------------------------------------- */
+
+  .cp-divider {
+    @apply border-t border-cp-border;
+  }
+
+
+  .cp-divider-strong {
+    @apply border-t border-cp-border-strong;
+  }
+
+
+  /* --------------------------------------------------------------
+     BADGES
+     -------------------------------------------------------------- */
+
+  .cp-badge {
+    @apply
+      inline-flex
+      items-center
+      gap-1.5
+      px-2
+      py-0.5
+      rounded-full
+      text-caption
+      font-medium;
+  }
+
+
+  .cp-badge-allow {
+    @apply
+      cp-badge
+      bg-cp-allow-soft
+      text-cp-allow;
+  }
+
+
+  .cp-badge-modify {
+    @apply
+      cp-badge
+      bg-cp-modify-soft
+      text-cp-modify;
+  }
+
+
+  .cp-badge-verify {
+    @apply
+      cp-badge
+      bg-cp-verify-soft
+      text-cp-verify;
+  }
+
+
+  .cp-badge-escalate {
+    @apply
+      cp-badge
+      bg-cp-escalate-soft
+      text-cp-escalate;
+  }
+
+
+  .cp-badge-block {
+    @apply
+      cp-badge
+      bg-cp-block-soft
+      text-cp-block;
+  }
+
+
+  .cp-badge-unknown {
+    @apply
+      cp-badge
+      bg-cp-unknown-soft
+      text-cp-unknown;
+  }
+
+
+  /* --------------------------------------------------------------
+     PANELS
+     -------------------------------------------------------------- */
+
+  .cp-panel {
+    @apply
+      bg-cp-surface
+      border
+      border-cp-border
+      rounded-lg
+      p-4;
+  }
+
+
+  .cp-panel-header {
+    @apply
+      flex
+      items-center
+      justify-between
+      mb-3;
+  }
+
+
+  .cp-section {
+    @apply space-y-3;
+  }
+
+
+  .cp-section-header {
+    @apply
+      flex
+      items-center
+      gap-2
+      mb-2;
+  }
+
+
+  /* ==============================================================
+     PIPELINE
+     ============================================================== */
+
+  .cp-pipeline-rail {
+    @apply relative;
+  }
+
+
+  .cp-pipeline-rail::before {
+    content: '';
+
+    @apply
+      absolute
+      left-4
+      top-8
+      bottom-8
+      w-px
+      bg-cp-border;
+  }
+
+
+  .cp-pipeline-rail-active::before {
+    @apply bg-cp-accent/40;
+  }
+
+
+  .cp-stage {
+    @apply
+      relative
+      pl-12;
+  }
+
+
+  .cp-stage-marker {
+    @apply
+      absolute
+      left-0
+      top-1
+      w-8
+      h-8
+      rounded-full
+      flex
+      items-center
+      justify-center
+      z-10;
+  }
+
+
+  .cp-stage-marker-complete {
+    @apply
+      bg-cp-brand
+      text-white;
+  }
+
+
+  .cp-stage-marker-active {
+    @apply
+      bg-cp-brand
+      text-white
+      animate-pulse-soft;
+  }
+
+
+  .cp-stage-marker-pending {
+    @apply
+      bg-cp-surface-2
+      text-cp-text-muted
+      border
+      border-cp-border;
+  }
+
+
+  .cp-stage-marker-error {
+    @apply
+      bg-cp-block
+      text-white;
+  }
+
+
+  .cp-flow-arrow {
+    @apply
+      relative
+      pl-12
+      py-1;
+  }
+
+
+  .cp-flow-arrow::before {
+    content: '';
+
+    @apply
+      absolute
+      left-[15px]
+      top-0
+      bottom-0
+      w-px
+      bg-cp-border;
+  }
+
+
+  .cp-flow-arrow::after {
+    content: '';
+
+    @apply
+      absolute
+      left-[12px]
+      top-1/2
+      -translate-y-1/2
+      w-2
+      h-2
+      border-r
+      border-b
+      border-cp-border
+      rotate-45;
+  }
+
+
+  .cp-flow-arrow-green::after {
+    @apply border-cp-accent/50;
+  }
+
+
+  /* ==============================================================
+     INTERCEPT GATE
+     ============================================================== */
+
+  .cp-intercept-gate {
+    @apply
+      relative
+      border
+      border-cp-accent
+      bg-cp-white
+      rounded-lg
+      shadow-intercept
+      overflow-hidden;
+  }
+
+
+  .cp-intercept-bar {
+    @apply
+      bg-cp-brand
+      text-white
+      px-4
+      py-2
+      flex
+      items-center
+      gap-3;
+  }
+
+
+  /* ==============================================================
+     DECISION DISPLAY
+     ============================================================== */
+
+  .cp-decision-display {
+    @apply
+      border
+      rounded-lg
+      p-6
+      text-center;
+  }
+
+
+  .cp-decision-display-allow {
+    @apply
+      border-cp-allow/25
+      bg-cp-allow-soft;
+  }
+
+
+  .cp-decision-display-modify {
+    @apply
+      border-cp-modify/25
+      bg-cp-modify-soft;
+  }
+
+
+  .cp-decision-display-block {
+    @apply
+      border-cp-block/30
+      bg-cp-block-soft;
+  }
+
+
+  .cp-decision-display-escalate {
+    @apply
+      border-cp-escalate/25
+      bg-cp-escalate-soft;
+  }
+
+
+  .cp-decision-display-verify {
+    @apply
+      border-cp-verify/25
+      bg-cp-verify-soft;
+  }
+
+
+  /* ==============================================================
+     RESPONSE DIFF
+     ============================================================== */
+
+  .cp-diff-added {
+    @apply
+      bg-cp-allow-soft
+      border-l-2
+      border-l-cp-allow
+      px-2
+      py-0.5;
+  }
+
+
+  .cp-diff-removed {
+    @apply
+      bg-cp-block-soft
+      border-l-2
+      border-l-cp-block
+      px-2
+      py-0.5
+      line-through
+      opacity-70;
+  }
+
+
+  .cp-diff-unchanged {
+    @apply
+      text-cp-text-secondary;
+  }
+
+
+  /* ==============================================================
+     INSPECTOR
+     ============================================================== */
+
+  .cp-inspector-section {
+    @apply
+      py-3
+      border-b
+      border-cp-border/60
+      last:border-0;
+  }
+
+
+  .cp-inspector-label {
+    @apply
+      text-caption
+      font-medium
+      text-cp-text-muted
+      uppercase
+      tracking-wider
+      mb-1.5;
+  }
+}
+
+
+/* ================================================================
+   SEMANTIC STATE COLORS
+   ================================================================ */
+
+.state-allow {
+  @apply text-cp-allow;
+}
+
+.state-modify {
+  @apply text-cp-modify;
+}
+
+.state-verify {
+  @apply text-cp-verify;
+}
+
+.state-escalate {
+  @apply text-cp-escalate;
+}
+
+.state-block {
+  @apply text-cp-block;
+}
+
+.state-unknown {
+  @apply text-cp-unknown;
+}
+
+.state-unavailable {
+  @apply text-cp-unavailable;
+}
+
+
+/* ================================================================
+   SEMANTIC SOFT BACKGROUNDS
+   ================================================================ */
+
+.bg-state-allow {
+  @apply
+    bg-cp-allow-soft
+    text-cp-allow;
+}
+
+.bg-state-modify {
+  @apply
+    bg-cp-modify-soft
+    text-cp-modify;
+}
+
+.bg-state-verify {
+  @apply
+    bg-cp-verify-soft
+    text-cp-verify;
+}
+
+.bg-state-escalate {
+  @apply
+    bg-cp-escalate-soft
+    text-cp-escalate;
+}
+
+.bg-state-block {
+  @apply
+    bg-cp-block-soft
+    text-cp-block;
+}
+
+.bg-state-unknown {
+  @apply
+    bg-cp-unknown-soft
+    text-cp-unknown;
+}
+
+.bg-state-unavailable {
+  @apply
+    bg-cp-surface-2
+    text-cp-unavailable;
+}
+
+
+/* ================================================================
+   DECISION STYLING
+   ================================================================ */
+
+.decision-allow {
+  @apply
+    bg-cp-allow
+    text-white;
+}
+
+.decision-modify {
+  @apply
+    bg-cp-modify
+    text-white;
+}
+
+.decision-verify {
+  @apply
+    bg-cp-verify
+    text-white;
+}
+
+.decision-escalate {
+  @apply
+    bg-cp-escalate
+    text-white;
+}
+
+.decision-block {
+  @apply
+    bg-cp-block
+    text-white;
+}
+
+
+/* ================================================================
+   STATUS INDICATORS
+   ================================================================ */
+
+.status-dot {
+  @apply
+    w-2
+    h-2
+    rounded-full
+    flex-shrink-0;
+}
+
+.status-dot-allow {
+  @apply bg-cp-allow;
+}
+
+.status-dot-modify {
+  @apply bg-cp-modify;
+}
+
+.status-dot-verify {
+  @apply bg-cp-verify;
+}
+
+.status-dot-escalate {
+  @apply bg-cp-escalate;
+}
+
+.status-dot-block {
+  @apply bg-cp-block;
+}
+
+.status-dot-unknown {
+  @apply bg-cp-unknown;
+}
+
+
+/* ================================================================
+   SMALL MOTION SYSTEM
+   ================================================================ */
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 2.5s ease-in-out infinite;
+}
+
+
+@keyframes resolve-check {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-resolve {
+  animation: resolve-check 0.25s ease-out both;
+}
+
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.2s ease-out both;
+}
+
+
+@keyframes stage-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-stage-reveal {
+  animation: stage-reveal 0.25s ease-out both;
+}
+
+
+/* ================================================================
+   PAGE TRANSITIONS
+   ================================================================ */
+
+.cp-page-transition {
+  opacity: 1;
+  transform: translateY(0);
+
+  transition:
+    opacity 0.15s ease-out,
+    transform 0.15s ease-out;
+}
+
+.cp-page-exiting {
+  opacity: 0;
+  transform: translateY(5px);
+}
+
+.cp-page-entering {
+  opacity: 0;
+  transform: translateY(-3px);
+}
+
+.cp-page-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* ================================================================
+   REDUCED MOTION
+   ================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .animate-pulse-dot,
+  .animate-fade-in,
+  .animate-slide-up,
+  .animate-reveal,
+  .animate-slide-in,
+  .animate-slide-in-right,
+  .animate-resolve,
+  .animate-stage-reveal,
+  .animate-pulse-soft,
+  .cp-page-transition {
+    animation: none !important;
+    transition: none !important;
+  }
+}
