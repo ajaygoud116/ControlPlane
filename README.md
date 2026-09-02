@@ -1,4 +1,4 @@
-# ControlPlane
+# ControlPlane Prototype
 
 > AI runtime governance — observe, detect, decide, intervene.
 
@@ -209,7 +209,6 @@ python -m pytest tests/ -v
 V1 prototype. Known constraints:
 
 - Performance verification depends on a local evidence corpus
-- Regex-based detectors have known blind spots
 - No multi-turn conversation support
 - No real-time streaming interception
 - No authentication, rate limiting, or multi-tenant isolation
