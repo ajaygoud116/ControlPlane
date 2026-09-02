@@ -86,9 +86,12 @@ Thumbs.db
 # Build artifacts
 src/controlplane.egg-info/
 
-# Audit & documentation reports
-*.md
-*.MD
+# Audit & report files
+AUDIT_REPORT.md
+FORENSIC_INSPECTION_REPORT.md
+GROUND_LEVEL_AUDIT_REPORT.md
+UI_API_AUDIT.md
+ARCHITECTURE.md
 
 # Tests
 tests/
